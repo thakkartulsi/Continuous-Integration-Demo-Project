@@ -1,10 +1,9 @@
 """
 Inspirational Quote Generator
 
-This is a Streamlit app that fetches a random inspirational quote 
-from the Quotable API and displays it to the user. 
+This is a Streamlit app that fetches a random inspirational quote
+from the Quotable API and displays it to the user.
 The user can click a button to retrieve a new quote.
-
 """
 import streamlit as st
 import requests
@@ -18,7 +17,7 @@ st.write('Click the button below to get a random inspirational quote!')
 def get_quote():
     """
     Fetches a random inspirational quote from the Quotable API.
-    If successful, returns the formatted quote and author, 
+    If successful, returns the formatted quote and author,
     else returns an error message.
     """
     response = requests.get(
