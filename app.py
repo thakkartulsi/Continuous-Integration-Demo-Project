@@ -9,7 +9,7 @@ def get_quote():
     response = requests.get('https://api.quotable.io/random', verify=False)
     if response.status_code == 200:
         quote = response.json()
-        return f'{quote['content']}\n\n-*{quote['author']}*'
+        return f"**{quote['content']}**\n\n— *{quote['author']}*"
     else:
         return "Oops! Couldn't fetch a quote. Try again!"
 

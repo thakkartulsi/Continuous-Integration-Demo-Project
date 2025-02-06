@@ -1,11 +1,12 @@
 import pytest
 from unittest.mock import patch
-import app  # Assuming your main file is named `app.py`
+import app
 import subprocess
 
 # Test successful API response
 @patch("app.requests.get")
 def test_get_quote_success(mock_get):
+    # Mocking a successful response
     mock_response = {
         "content": "Success is not final; failure is not fatal: It is the courage to continue that counts.",
         "author": "Winston Churchill"
@@ -13,14 +14,16 @@ def test_get_quote_success(mock_get):
     mock_get.return_value.status_code = 200
     mock_get.return_value.json.return_value = mock_response
 
+    # Call the function and check if the output is as expected
     quote = app.get_quote()
-    expected_output = "Success is not final; failure is not fatal: It is the courage to continue that counts.\n\n— *Winston Churchill*"
+    expected_output = "**Success is not final; failure is not fatal: It is the courage to continue that counts.**\n\n— *Winston Churchill*"
     assert quote == expected_output, "Test Failed: The quote response is incorrect."
 
 # Test API failure response
 @patch("app.requests.get")
 def test_get_quote_failure(mock_get):
-    mock_get.return_value.status_code = 500  # Simulating a failed request
+    # Mocking a failed API response
+    mock_get.return_value.status_code = 500  # Simulating a server error
 
     quote = app.get_quote()
     assert quote == "Oops! Couldn't fetch a quote. Try again!", "Test Failed: API failure handling is incorrect."
@@ -28,6 +31,7 @@ def test_get_quote_failure(mock_get):
 # Test if the function handles a missing field in response
 @patch("app.requests.get")
 def test_get_quote_missing_field(mock_get):
+    # Mocking a response missing the 'author' field
     mock_response = {"content": "Life is beautiful."}  # Missing author field
     mock_get.return_value.status_code = 200
     mock_get.return_value.json.return_value = mock_response
